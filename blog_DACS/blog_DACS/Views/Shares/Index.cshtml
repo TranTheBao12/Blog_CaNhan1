@@ -1,0 +1,48 @@
+﻿@model IEnumerable<blog_DACS.Models.Share>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Quản lý chia sẻ</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Ngày chia sẻ
+            </th>
+            <th>
+                IdPost
+            </th>
+            <th>
+                IdUser
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPostNavigation.IdPost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUserNavigation.IdUser)
+            </td>
+            <td>
+                |
+                @Html.ActionLink("Details", "Xem", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Xóa", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

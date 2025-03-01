@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "postAdmin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+        @foreach (var item in Model)
+        {
+    <article class="postcard dark blue">
+        <a class="postcard__img_link" asp-action="Details" asp-route-id="@item.IdPost">
+            <img class="postcard__img" src="~/images/@item.ImagePost" width="150px" alt="Image Title" />
+        </a>
+        <div class="postcard__text">
+            <h1 class="postcard__title blue"><a asp-action="Details" asp-controller="QLPosts" asp-route-id="@item.IdPost">@item.Title</a></h1>
+            <div class="postcard__subtitle small">
+                <time>
+                    <i class="fas fa-calendar-alt mr-2"></i>@item.CreatedAt
+                </time>
+            </div>
+            <div class="postcard__bar"></div>
+            <div class="postcard__preview-txt">@item.ContentPost</div>
+        </div>
+    </article>
+        }
+    </tbody>
+</table>
+

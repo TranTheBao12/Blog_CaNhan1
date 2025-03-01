@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webleb</title>
+    <link href="~/styles.css" rel="stylesheet" />
+   
+</head>
+<body style="display:flex; align-items:center; justify-content:center;">
+<div class="login-page">
+  <div class="form">
+            <form class="reset-password-form" method="POST" style="display:none;" asp-action="ForgotPassword" asp-controller="Default">
+                <h2>Reset Password</h2>
+                <input name="email" type="email" placeholder="Email"  required />
+                <button type="submit" class="btn">Reset Password</button>
+                <p class="message">Remembered your password? <a href="#" onclick="showLoginForm()">Sign In</a></p>
+            </form>
+          
+
+         
+
+  
+           
+      <form method="post" action="/Default/Login">
+      <h2></i> Login</h2>
+      <input name="email" type="email" placeholder="email" required />
+      <input name="password" type="password" placeholder="password" required/>
+                <div class="d-flex justify-content-center mt-3 login_container">
+                    <button type="submit" name="button" class="btn login_btn">Login</button>
+                </div>
+                <p class="message"><a href="#" onclick="showResetPasswordForm()">ResetPassword</a> | <a href="#" onclick="showRegisterForm()">Create an account</a></p>
+
+
+
+    </form>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function showResetPasswordForm() {
+            document.querySelector('.reset-password-form').style.display = 'none';
+            document.querySelector('.register-form').style.display = 'block';
+        }
+
+        function showRegisterForm() {
+            document.querySelector('.register-form').style.display = 'none';
+            document.querySelector('.reset-password-form').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.querySelector('.register-form').style.display = 'block';
+            document.querySelector('.reset-password-form').style.display = 'block';
+        }
+      
+    </script>
+   <script>
+    function register() {
+        var fullName = document.getElementById("fullName").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        $.ajax({
+            url: "/Default/Register",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ FullName: fullName, Email: email, Pass: password }),
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    window.location.href = "/Default/Login"; // Redirect to login page
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("An error occurred during the registration process.");
+            }
+        });
+    }
+</script>
+    <script src="~/main.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<blog_DACS.Models.User>
+@{
+    ViewData["Title"] = "Indexuser";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+
+<div class="table-responsive">
+    <!-- Thêm class để làm cho bảng có thể cuộn -->
+    <table class="table table-bordered table-hover">
+        <!-- Thêm các class của Bootstrap -->
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <a style="color: white; font-size: 20px">@user.FullName</a>
+
+                </td>
+                    <td>
+                        <form method="post" asp-action="FollowUser" asp-controller="Profile">
+                            <input type="hidden" name="idFollowing" value="@user.IdUser" />
+                            <button type="submit" class="btn btn-primary">Follow</button>
+                        </form>
+                    </td>
+                    <td>
+                        
+                        
+                            <form method="post" asp-action="UnfollowUser" asp-controller="Profile">
+                                <input type="hidden" name="idFollowing" value="@user.IdUser" />
+                                <button type="submit" class="btn btn-danger">Unfollow</button>
+                            </form>
+                        
+                      
+                    </td>
+                    <td>
+                        <form method="post" asp-action="FavoriteUser" asp-controller="Profile">
+                            <input type="hidden" name="idFavoriteUser" value="@user.IdUser" />
+                            <button type="submit" class="btn btn-success">Favorite</button> <!-- Thêm class của Bootstrap -->
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

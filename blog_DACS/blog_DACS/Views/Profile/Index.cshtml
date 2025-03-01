@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+
+@model List<blog_DACS.View_Models.ProfileViewModel>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Colorlib Wordify &mdash; Minimal Blog Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+
+    <link href="~/layoutnew/css/profile.css" rel="stylesheet" />
+  
+</head>
+
+<form asp-controller="Search" asp-action="Indexuser" method="get" class="input-group rounded">
+    <input type="search" class="form-control rounded" name="keyword" placeholder="Tìm Kiếm" aria-label="Search" aria-describedby="search-addon">
+    <button class="btn btn-outline-primary" type="submit" id="search-addon">
+        <i class="fas fa-search"></i>
+    </button>
+</form>
+<div class="padding">
+    <div class="col-md-8">
+        <!-- Column -->
+        <div class="card">
+           
+            <div class="card-body little-profile text-center">
+                <div class="pro-img"><img src="https://i.imgur.com/8RKXAIV.jpg" alt="user"></div>
+                <h3 class="m-b-0">@ViewBag.FullName</h3>
+
+                <form method="get" action="/Profile/FavoritePosts">
+                    <button type="submit" class="btn btn-primary flex-grow-1">Post yêu thích</button>
+                </form>
+              
+                   
+               
+                    
+
+                    <h3 class="m-b-0 font-light">@ViewBag.totalfavoriteuser</h3><a style="color: white; font-size: 20px">Favorite</a>
+
+
+                <h3 class="m-b-0 font-light">@ViewBag.TotalIdFollowing</h3><a href="@Url.Action("Followers", "Profile")" style="color: white; font-size: 20px">Followers</a>
+               
+
+                <h3 class="m-b-0 font-light">@ViewBag.TotalIdFollower</h3><a href="@Url.Action("Following", "Profile")" style="color: white; font-size: 20px">Following</a>
+              @*   <<form method="get" action="/Profile/Followers">
+                    <button type="submit" class="btn btn-primary flex-grow-1">Follower</button>
+                </form> *@
+            </div>
+            </div>
+        </div>
+    </div>
+
+@* 
+<section class="vh-100" style="background-color: #9de2ff;">
+
+    <div class="container py-5 h-100">
+
+        <div class="row d-flex justify-content-center align-items-center h-100" >
+            <div class="col col-md-9 col-lg-7 col-xl-5">
+                <div class="card" style="border-radius: 20px;width:30rem">
+                    <div class="card-body p-4" style="width:300px">
+                        <div class="d-flex text-black">
+                            <div class="flex-grow-1 ms-3">
+                                <h3 class="mb-1">@ViewBag.FullName</h3>
+                                <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                                    <div>
+                                        <p class="small text-muted mb-1">Following</p>
+                                        <p class="mb-0">@ViewBag.TotalIdFollower</p>
+                                    </div>
+                                    <div class="px-3">
+                                        <p class="small text-muted mb-1">Followers</p>
+                                        <p class="mb-0">@ViewBag.TotalIdFollowing</p>
+                                    </div>
+                                    <div>
+                                        <p class="small text-muted mb-1">Favorite User</p>
+                                        <p class="mb-0">@ViewBag.totalfavoriteuser</p>
+                                    </div>
+                                    <td></td>
+                                   
+                                </div>
+                                <div class="d-flex pt-1">
+                                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary flex-grow-1">chỉnh sửa thông tin</button>
+                                    &nbsp;
+                                    <td>
+                                        <form method="get" action="/Profile/FavoritePosts">
+                                            <button type="submit" class="btn btn-primary flex-grow-1">Post yêu thích</button>
+                                        </form>
+                                    </td>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> *@
+
+@if (Model.Count > 0)
+{
+    <ul>
+        @foreach (var profileViewModel in Model)
+        {
+        
+            <article class="postcard dark blue">
+                <a class="postcard__img_link" asp-action="Details" asp-route-id="@profileViewModel.IdPost">
+                    <img class="postcard__img" src="@Url.Content($"~/images/{profileViewModel.ImagePost}")" alt="Image">
+                </a>
+                <div class="postcard__text">
+                    <h1 class="postcard__title blue"><a asp-action="Details" asp-route-id="@profileViewModel.IdPost">@profileViewModel.Title</a></h1>
+                    <div class="postcard__subtitle small">
+                       
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">@profileViewModel.ContentPost</div>
+                </div>
+            </article>
+        }
+    </ul>
+}
+else
+{
+    <p>Không có bài viết nào được chia sẻ.</p>
+}
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</html>

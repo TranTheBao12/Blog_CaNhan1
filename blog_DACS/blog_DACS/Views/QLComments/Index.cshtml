@@ -1,0 +1,57 @@
+﻿@model IEnumerable<blog_DACS.Models.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Quản Lý bình luận</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nội dung
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                bình luận
+            </th>
+            <th>
+               IdPost
+            </th>
+            <th>
+                <p>Gmail</p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPostNavigation.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUserNavigation.Email)
+            </td>
+            <td>
+
+                    <a asp-action="Delete" asp-controller="QLComments" asp-route-idUser="@item.IdUser" asp-route-idPost="@item.IdPost">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

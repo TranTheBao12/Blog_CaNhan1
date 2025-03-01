@@ -1,0 +1,23 @@
+﻿@model List<blog_DACS.View_Models.ProfileViewModel>
+@{
+    ViewData["Title"] = "sharePosts";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+@if (Model.Count > 0)
+{
+    <ul>
+        @foreach (var profileViewModel in Model)
+        {
+            <li>
+                <h3>@profileViewModel.Title</h3>
+                <p>@profileViewModel.ContentPost</p>
+                <img src="@profileViewModel.ImagePost" alt="Image" width="200px">
+                <p>Shared By: @profileViewModel.Shares</p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Không có bài viết nào được chia sẻ.</p>
+}

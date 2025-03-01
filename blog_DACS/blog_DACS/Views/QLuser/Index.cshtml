@@ -1,0 +1,101 @@
+﻿@model IEnumerable<blog_DACS.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<form asp-controller="Search" asp-action="UserAdmin" role="search" class="app-search d-none d-md-block me-3">
+    <input type="search" placeholder="Tìm kiếm " name="keyword" class="form-control mt-0">
+    <a href="" class="active">
+        
+    </a>
+</form>
+<h1>Quản Lý người dùng</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Gmail
+            </th>
+            <th>
+                Năm sinh
+            </th>
+            <th>
+                Gioi Tính
+            </th>
+            <th>
+                Nơi sinh
+            </th>
+            <th>
+                ngày tạo
+            </th>
+            <th>
+               
+            </th>
+            <th>
+              Trạng thái
+            </th>
+            <th>
+               
+            </th>
+            <th>
+              Vai trò
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExistenceStatus)
+            </td>
+            <td>
+              
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRoleNavigation.RoleName)
+            </td>
+            <td>
+               @*  <a asp-action="Edit" asp-route-id="@item.IdUser">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdUser">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdUser">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

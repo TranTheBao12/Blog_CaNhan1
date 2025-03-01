@@ -1,0 +1,90 @@
+﻿@model IEnumerable<blog_DACS.Models.User>
+@{
+    ViewData["Title"] = "UserAdmin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Gmail
+            </th>
+            <th>
+                Năm sinh
+            </th>
+            <th>
+                Gioi Tính
+            </th>
+            <th>
+                Nơi sinh
+            </th>
+            <th>
+                ngày tạo
+            </th>
+            <th>
+
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+
+            </th>
+            <th>
+                Vai trò
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => user.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.PlaceOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.CreatedAt)
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.ExistenceStatus)
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.IdRoleNavigation.RoleName)
+                </td>
+                <td>
+                    @*  <a asp-action="Edit" asp-route-id="@item.IdUser">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdUser">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdUser">Delete</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

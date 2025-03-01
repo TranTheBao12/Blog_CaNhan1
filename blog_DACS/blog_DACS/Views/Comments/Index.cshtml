@@ -1,0 +1,86 @@
+﻿
+@model IEnumerable<blog_DACS.Models.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+<style>
+    /* Chuyển màu chữ thành trắng và đặt kích thước font là 30px */
+    ul {
+        color: white;
+        font-size: 30px;
+    }
+</style>
+@{
+    // Lấy comment đầu tiên trong danh sách
+    var firstComment = Model.FirstOrDefault();
+}
+
+<!-- Dòng <a> được di chuyển ra ngoài vòng lặp foreach -->
+<a asp-controller="Post" asp-action="Details" asp-route-id="@firstComment?.IdPost">
+    (@Model.Count(c => c.IdPost == firstComment?.IdPost))
+    Comment
+</a>
+<ul>
+    @foreach (var comment in Model.Where(c => c.ParentComment == null))
+
+    {
+       
+        <li>@comment.ContentComment - @comment.CreatedAt</li>
+        <!-- Thêm nút Rep -->
+      
+        <button class="btn btn-primary" onclick="toggleReplyForm(@comment.IdPost)">Rep</button>
+        <form id="repForm_@comment.IdPost" style="display:none;" asp-controller="Comments" asp-action="RepComment" method="post">
+            <input type="hidden" name="parentId" value="@comment.IdPost" />
+            <textarea name="ContentComment" rows="4" cols="50"></textarea>
+            <button type="submit" class="btn btn-success">Rep</button>
+        </form>
+        @foreach (var comment1 in Model.Where(c => c.ParentComment == 1))
+        {
+            <li>@comment1.ContentComment - @comment1.CreatedAt</li>
+            <!-- Thêm nút Rep -->
+         
+        }
+      
+       @*  <form method="post" action="@Url.Action("CreateComments", "Comments")">
+            <!-- Thêm một trường ẩn để truyền IdPost -->
+            <input type="hidden" name="idPost" value="@comment.IdPost" />
+
+            <!-- Thêm textarea cho người dùng nhập nội dung bình luận -->
+            <textarea id="contentComment_@comment.IdPost" name="contentComment_@comment.IdPost" rows="4" cols="50"></textarea><br>
+
+            <!-- Nút submit để gửi form -->
+            <button class="btn btn-primary" type="submit">Bình luận</button>
+        </form> *@}
+        <form method="post" asp-controller="Comments" asp-action="CreateComment">
+            <!-- Trường ẩn để truyền IdPost -->
+            <input type="hidden" name="IdPost" value="@Model.FirstOrDefault()?.IdPost" />
+            <!-- Trường ẩn để truyền IdUser -->
+            <!-- Textarea cho người dùng nhập nội dung bình luận -->
+            <textarea name="ContentComment" rows="4" cols="50"></textarea><br>
+            <!-- Nút submit để gửi form -->
+            <button class="btn btn-primary" type="submit">Bình luận</button>
+        </form>
+    
+</ul>
+
+<!-- Nút thêm bình luận -->
+@* <form method="post" action="@Url.Action("CreateComment", "Comments")">
+    <!-- Trường ẩn để truyền IdPost -->
+    <input type="hidden" name="IdPost" value="@Model.FirstOrDefault()?.IdPost" />
+    <!-- Trường ẩn để truyền IdUser -->
+
+    <!-- Textarea cho người dùng nhập nội dung bình luận -->
+    <textarea name="ContentComment" rows="4" cols="50"></textarea><br>
+    <!-- Nút submit để gửi form -->
+    <button class="btn btn-primary" type="submit">Bình luận</button>
+</form>
+ *@
+
+<script>
+    function toggleReplyForm(commentId) {
+        var form = document.getElementById("repForm_" + commentId);
+        form.style.display = (form.style.display == "none" ? "block" : "none");
+    }
+</script>

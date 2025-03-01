@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+
+<div class="table-responsive">
+    <!-- Thêm class để làm cho bảng có thể cuộn -->
+    <table class="table table-bordered table-hover">
+        <!-- Thêm các class của Bootstrap -->
+        <thead>
+            <tr>
+               
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+ 
+        @foreach (var post in Model)
+        {
+            
+                <article class="postcard dark blue">
+                    <a class="postcard__img_link" asp-action="Details"asp-controller="Posts" asp-route-id="@post.IdPost">
+                        <img class="postcard__img" src="~/images/@post.ImagePost" width="" alt="Image Title" />
+                    </a>
+                    <div class="postcard__text">
+                        <h1 class="postcard__title blue"><a asp-action="Details" asp-route-id="@post.IdPost">@post.Title</a></h1>
+                        <div class="postcard__subtitle small">
+                            <time>
+                                <i class="fas fa-calendar-alt mr-2"></i>@post.CreatedAt
+                            </time>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">@post.ContentPost</div>
+                    </div>
+                </article>
+        }
+  
+        </tbody>
+    </table>
+</div>

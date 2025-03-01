@@ -1,0 +1,49 @@
+﻿@model blog_DACS.Models.Post
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label asp-for="Title" class="control-label" style="color: white; font-size: 20px;"></label>
+                <input asp-for="Title" class="form-control form-control-lg" />
+                <span asp-validation-for="Title" class="text-danger" style="color: white; font-size: 16px;"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label asp-for="ContentPost" class="control-label" style="color: white; font-size: 20px;"></label>
+                <textarea asp-for="ContentPost" class="form-control form-control-lg" rows="6"></textarea>
+                <span asp-validation-for="ContentPost" class="text-danger" style="color: white; font-size: 16px;"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label asp-for="ImagePost" class="control-label" style="color: white; font-size: 20px;"></label>
+                <input type="file" name="image" class="form-control form-control-lg" style="color: white;" />
+                <span asp-validation-for="ImagePost" class="text-danger" style="color: white; font-size: 16px;"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label asp-for="IsPublic" class="control-label" style="color: white; font-size: 20px;"></label>
+                <select asp-for="IsPublic" class="form-control form-control-lg" style="font-size: 16px;">
+                    <option value="true">Public</option>
+                    <option value="false">Private</option>
+                </select>
+                <span asp-validation-for="IsPublic" class="text-danger" style="color: white; font-size: 16px;"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <input type="submit" value="Create" class="btn btn-primary btn-lg" style="font-size: 20px;" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <a asp-action="Index" style="color: white; font-size: 20px;">Back to List</a>
+</div> 

@@ -1,0 +1,214 @@
+﻿@model blog_DACS.ViewModels.PostViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+
+<style>
+    .white-text {
+        color: white;
+    }
+
+    .button-container {
+        display: flex; /* Sử dụng flexbox để xếp các nút button cùng một hàng */
+    }
+
+        .button-container button {
+            margin-right: 10px; /* Khoảng cách giữa các nút */
+        }
+
+    .like-button {
+        background-color: #343a40; /* Dark background color */
+        color: #ffffff; /* White text color */
+    }
+
+        /* Style for Like button when liked */
+        .like-button.liked {
+            background-color: #28a745; /* Green background color */
+            color: #ffffff; /* White text color */
+        }
+
+    /* Style for Favorite button */
+    .favorite-button {
+        background-color: #007bff; /* Blue background color */
+        color: #ffffff; /* White text color */
+    }
+
+        /* Style for Favorite button when favorited */
+        .favorite-button.favorited {
+            background-color: #dc3545; /* Red background color */
+            color: #ffffff; /* White text color */
+        }
+
+    /* Style for Share button */
+    .share-button {
+        background-color: #007bff; /* Blue background color */
+        color: #ffffff; /* White text color */
+    }
+
+        /* Style for Share button when shared */
+        .share-button.shared {
+            background-color: #ffc107; /* Yellow background color */
+            color: #ffffff; /* White text color */
+        }
+
+</style>
+
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+    <dl class="row">
+       
+        <dd class="col-sm-10 white-text" >
+            <h1 style="font-size: 24px;">@Html.DisplayFor(model => model.Title)</h1>
+        </dd>
+        <br />
+        <dd style="font-size: 15px;" class="col-sm-10 white-text">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <br />
+        <dd style="font-size: 15px;" class="col-sm-10 white-text">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <br />
+        <dd style="font-size: 15px;" class="col-sm-10 white-text">
+            <img src="~/images/@Html.DisplayFor(model => model.ImagePost)" alt="Image" width="300px">
+        </dd>
+        <br />
+      
+     
+        <br />
+        <dd style="font-size: 15px;"  class="col-sm-10 white-text">
+            @Html.DisplayFor(model => model.ContentPost)
+        </dd>
+        <br />
+      
+       
+       
+       
+    </dl>
+<div>
+    <!-- Hiển thị số lượt like -->
+    <p class="col-sm-10 white-text" style="font-size: 15px;">Lượt like: @ViewBag.LikeCount</p>
+    <p class="col-sm-10 white-text" style="font-size: 15px;">Lượt share: @ViewBag.ShareCount</p>
+</div>
+<div class="button-container">
+    @if (ViewBag.IsLikedByUser)
+    {
+        <form method="post" asp-action="UnlikePost" asp-controller="Posts" class="like-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-primary white-text like-button liked">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+            </button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-action="LikePost" asp-controller="Posts" class="like-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-dark white-text like-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+            </button>
+        </form>
+    }
+
+    @if (ViewBag.IsFavoritedByUser)
+    {
+        <form method="post" asp-action="UnfavoritePost" asp-controller="Profile" class="favorite-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-primary white-text favorite-button favorited">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
+                </svg>
+            </button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-action="FavoritePost" asp-controller="Profile" class="favorite-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-primary white-text favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
+                </svg>
+            </button>
+        </form>
+    }
+   
+
+ @if (ViewBag.IsSharedByUser)
+    {
+        <form method="post" asp-action="UnsharePost" asp-controller="Profile" class="share-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-primary white-text share-button shared">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                    <path d="M11 2.5a2.5 2.5 0 1 1 0 5h-5a.5.5 0 0 1 0-1h5a1.5 1.5 0 1 0 0-3h-5a.5.5 0 0 1 0-1h5a1.5 1.5 0 0 0 0-3h-5a.5.5 0 0 1 0-1h5a2.5 2.5 0 0 1 0 5h-5a.5.5 0 0 1 0-1h5z"/>
+                </svg>
+            </button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-action="Share" asp-controller="Profile" class="share-form">
+            <input type="hidden" name="idPost" value="@Model.IdPost" />
+            <button type="submit" class="btn btn-primary white-text share-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                    <path d="M11 2.5a2.5 2.5 0 1 1 0 5h-5a.5.5 0 0 1 0-1h5a1.5 1.5 0 1 0 0-3h-5a.5.5 0 0 1 0-1h5a1.5 1.5 0 0 0 0-3h-5a.5.5 0 0 1 0-1h5a2.5 2.5 0 0 1 0 5h-5a.5.5 0 0 1 0-1h5z"/>
+                </svg>
+            </button>
+        </form>
+    }
+
+</div>
+<div class="button-container">
+    <br />
+    <form asp-controller="Comments" asp-action="Index" asp-route-id="@Model.IdPost" method="get">
+        <button type="submit" class="btn btn-primary">Bình luận</button>
+    </form>
+    <form asp-action="Delete" asp-route-id="@Model.IdPost" asp-controller="Posts" method="post">
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+
+        </div>
+    </form>
+    </div>
+   
+    @* <div>
+        <br />
+    <form asp-controller="Comments" asp-action="Index" asp-route-id="@Model.IdPost" method="get">
+        <button type="submit" class="btn btn-primary">Bình luận</button>
+    </form>
+    <form asp-action="Delete" asp-route-id="@Model.IdPost"asp-controller="Posts" method="post">
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+           
+        </div>
+    </form>
+    </div> *@
+
+
+<button asp-action="Index/Posts" class="btn btn-primary">Trở về</button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const unlikeForms = document.querySelectorAll('form.like-form[action$="UnlikePost"]');
+
+        unlikeForms.forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                const likeForm = this.previousElementSibling; // Get the previous form which is the Like form
+                const likeButton = likeForm.querySelector('.like-button'); // Get the Like button
+                likeButton.classList.remove('btn-danger'); // Remove the danger class
+                likeButton.classList.add('btn'); // Add the default class (or any desired class)
+            });
+        });
+    });
+</script>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<blog_DACS.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h1>Quản lý bài viết</h1>
+
+<p>
+    <a asp-action="Create">Thêm bài viết</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentPost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastAccessedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExistenceStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPublic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUserNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentPost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                    <img src="~/images/@item.ImagePost" alt="" width="80px">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastAccessedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExistenceStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUserNavigation.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPost">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPost">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPost">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
